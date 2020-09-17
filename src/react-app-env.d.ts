@@ -1,6 +1,6 @@
 /// <reference types="react-scripts" />
 
-type TableItem = {
+type Data = {
   id: number;
   firstName: string;
   lastName: string;
@@ -17,11 +17,10 @@ type TableItem = {
 
 type Order = 'asc' | 'desc';
 
-
-interface Data {
-    calories: number;
-    carbs: number;
-    fat: number;
-    name: string;
-    protein: number;
-  }
+// interface Data {
+//     calories: number;
+//     carbs: number;
+//     fat: number;
+//     name: string;
+//     protein: number;
+//   }
