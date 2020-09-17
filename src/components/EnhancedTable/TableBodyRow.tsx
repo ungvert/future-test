@@ -1,6 +1,10 @@
 import { TableRow, TableCell, Checkbox } from '@material-ui/core';
 import React from 'react';
-export default function TableBodyRow() {
+
+type Props = {
+  row: Data;
+};
+export default function TableBodyRow({ row }: Props) {
   // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
   //   const selectedIndex = selected.indexOf(name);
   //   let newSelected: string[] = [];
@@ -27,22 +31,27 @@ export default function TableBodyRow() {
       role="checkbox"
       // aria-checked={isItemSelected}
       tabIndex={-1}
-      key={row.name}
-      selected={isItemSelected}
+      key={row.id}
+      // selected={isItemSelected}
     >
-      <TableCell padding="checkbox">
+      {/* <TableCell >
         <Checkbox
           checked={isItemSelected}
           inputProps={{ 'aria-labelledby': labelId }}
         />
+      </TableCell> */}
+      <TableCell
+        component="th"
+        // id={labelId}
+        scope="row"
+        // padding="none"
+      >
+        {row.id}
       </TableCell>
-      <TableCell component="th" id={labelId} scope="row" padding="none">
-        {row.name}
-      </TableCell>
-      <TableCell align="right">{row.calories}</TableCell>
-      <TableCell align="right">{row.fat}</TableCell>
+      {/* <TableCell align="right">{row.id}</TableCell> */}
+      {/* <TableCell align="right">{row.fat}</TableCell>
       <TableCell align="right">{row.carbs}</TableCell>
-      <TableCell align="right">{row.protein}</TableCell>
+      <TableCell align="right">{row.protein}</TableCell> */}
     </TableRow>
   );
 }

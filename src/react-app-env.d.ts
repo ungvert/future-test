@@ -16,6 +16,13 @@ type Data = {
 };
 
 type Order = 'asc' | 'desc';
+type SortableRows =
+  | 'id'
+  | 'firstName'
+  | 'lastName'
+  | 'email'
+  | 'phone'
+  | 'description';
 
 // interface Data {
 //     calories: number;
@@ -24,3 +31,11 @@ type Order = 'asc' | 'desc';
 //     name: string;
 //     protein: number;
 //   }
+
+interface HeadCell {
+  disablePadding: boolean;
+  id: keyof Data;
+  label: string;
+  numeric: boolean;
+  sortable: boolean;
+}

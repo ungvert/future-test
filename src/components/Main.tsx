@@ -488,8 +488,7 @@ function Main() {
   const [data, setData] = useState(InitialData);
   return (
     <main>
-      Test
-      {/* <EnhancedTable data={data} setData={setData} /> */}
+      <EnhancedTable data={data} setData={setData} />
     </main>
   );
 }

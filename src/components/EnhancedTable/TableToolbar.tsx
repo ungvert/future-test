@@ -65,7 +65,7 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Dataset
         </Typography>
       )}
       {numSelected > 0 ? (

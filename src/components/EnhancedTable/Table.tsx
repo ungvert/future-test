@@ -19,7 +19,7 @@ function createData(
   fat: number,
   carbs: number,
   protein: number
-): Data {
+) {
   return { name, calories, fat, carbs, protein };
 }
 
@@ -69,10 +69,11 @@ type TableProps = {
   data: Data[];
   setData: React.Dispatch<React.SetStateAction<Data[]>>;
 };
+
 export default function EnhancedTable({ data, setData }: TableProps) {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('id');
+  const [orderBy, setOrderBy] = React.useState<SortableRows>('id');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -80,7 +81,7 @@ export default function EnhancedTable({ data, setData }: TableProps) {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: SortableRows
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -109,6 +110,25 @@ export default function EnhancedTable({ data, setData }: TableProps) {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
+  const headCells: HeadCell[] = [
+    {
+      id: 'id',
+      numeric: false,
+      disablePadding: false,
+      label: 'id',
+      sortable: true,
+    },
+    // { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
+    // { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
+    // { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
+    // {
+    //   id: 'protein',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'Protein (g)',
+    // },
+  ];
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -121,22 +141,23 @@ export default function EnhancedTable({ data, setData }: TableProps) {
             aria-label="enhanced table"
           >
             <EnhancedTableHead
+              headCells={headCells}
               classes={classes}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={data.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(data, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  // const isItemSelected = isSelected(row.name);
+                  // const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return <TableBodyRow />;
+                  return <TableBodyRow row={row} />;
                 })}
             </TableBody>
           </Table>
@@ -144,7 +165,7 @@ export default function EnhancedTable({ data, setData }: TableProps) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 50]}
           component="div"
-          count={rows.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
