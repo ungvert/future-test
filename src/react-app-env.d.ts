@@ -1,6 +1,6 @@
 /// <reference types="react-scripts" />
 
-type Data = {
+type RawData = {
   id: number;
   firstName: string;
   lastName: string;
@@ -14,6 +14,20 @@ type Data = {
   };
   description: string;
 };
+
+type Data = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  addressStreetAddress: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  description: string;
+};
+type SetData = React.Dispatch<React.SetStateAction<Data[]>>;
 
 type Order = 'asc' | 'desc';
 type SortableRows =
@@ -30,6 +44,8 @@ interface TableCell {
   disablePadding: boolean;
   numeric: boolean;
   sortable: boolean;
+  displayInTable: boolean;
+  inputType: string;
 }
 
 type ApiDataVariant = 'small' | 'big';

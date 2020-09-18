@@ -78,33 +78,35 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
             inputProps={{ 'aria-label': 'select all desserts' }}
           /> */}
         {/* </TableCell> */}
-        {tableCells.map((tableCell) => (
-          <TableCell
-            key={tableCell.id}
-            align={tableCell.numeric ? 'right' : 'left'}
-            padding={tableCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === tableCell.id ? order : false}
-          >
-            {tableCell.sortable ? (
-              <TableSortLabel
-                active={orderBy === tableCell.id}
-                direction={orderBy === tableCell.id ? order : 'asc'}
-                onClick={createSortHandler(tableCell.id as SortableRows)}
-              >
-                {tableCell.label}
-                {orderBy === tableCell.id ? (
-                  <span className={classes.visuallyHidden}>
-                    {order === 'desc'
-                      ? 'sorted descending'
-                      : 'sorted ascending'}
-                  </span>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              tableCell.label
-            )}
-          </TableCell>
-        ))}
+        {tableCells
+          .filter((cell) => cell.displayInTable)
+          .map((tableCell) => (
+            <TableCell
+              key={tableCell.id}
+              align={tableCell.numeric ? 'right' : 'left'}
+              padding={tableCell.disablePadding ? 'none' : 'default'}
+              sortDirection={orderBy === tableCell.id ? order : false}
+            >
+              {tableCell.sortable ? (
+                <TableSortLabel
+                  active={orderBy === tableCell.id}
+                  direction={orderBy === tableCell.id ? order : 'asc'}
+                  onClick={createSortHandler(tableCell.id as SortableRows)}
+                >
+                  {tableCell.label}
+                  {orderBy === tableCell.id ? (
+                    <span className={classes.visuallyHidden}>
+                      {order === 'desc'
+                        ? 'sorted descending'
+                        : 'sorted ascending'}
+                    </span>
+                  ) : null}
+                </TableSortLabel>
+              ) : (
+                tableCell.label
+              )}
+            </TableCell>
+          ))}
       </TableRow>
     </TableHead>
   );

@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type TableProps = {
   data: Data[];
-  setData: React.Dispatch<React.SetStateAction<Data[]>>;
+  setData: SetData;
 };
 
 export default function EnhancedTable({ data, setData }: TableProps) {
@@ -95,6 +95,8 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       numeric: false,
       disablePadding: false,
       sortable: true,
+      displayInTable: true,
+      inputType: 'number',
     },
     {
       id: 'firstName',
@@ -102,6 +104,8 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       numeric: false,
       disablePadding: true,
       sortable: true,
+      displayInTable: true,
+      inputType: 'text',
     },
     {
       id: 'lastName',
@@ -109,6 +113,8 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       numeric: false,
       disablePadding: true,
       sortable: true,
+      displayInTable: true,
+      inputType: 'text',
     },
     {
       id: 'email',
@@ -116,6 +122,8 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       numeric: false,
       disablePadding: true,
       sortable: true,
+      displayInTable: true,
+      inputType: 'email',
     },
     {
       id: 'phone',
@@ -123,6 +131,55 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       numeric: false,
       disablePadding: true,
       sortable: true,
+      displayInTable: true,
+      inputType: 'tel',
+    },
+
+    {
+      id: 'addressStreetAddress',
+      label: 'Street address',
+      numeric: false,
+      disablePadding: true,
+      sortable: true,
+      displayInTable: false,
+      inputType: 'text',
+    },
+    {
+      id: 'addressCity',
+      label: 'City',
+      numeric: false,
+      disablePadding: true,
+      sortable: true,
+      displayInTable: false,
+      inputType: 'text',
+    },
+    {
+      id: 'addressState',
+      label: 'State',
+      numeric: false,
+      disablePadding: true,
+      sortable: true,
+      displayInTable: false,
+      inputType: 'text',
+    },
+    {
+      id: 'addressZip',
+      label: 'Zip',
+      numeric: false,
+      disablePadding: true,
+      sortable: true,
+      displayInTable: false,
+      inputType: 'number',
+    },
+
+    {
+      id: 'description',
+      label: 'Description',
+      numeric: false,
+      disablePadding: true,
+      sortable: true,
+      displayInTable: false,
+      inputType: 'text',
     },
   ];
 
@@ -132,6 +189,9 @@ export default function EnhancedTable({ data, setData }: TableProps) {
         <EnhancedTableToolbar
           numSelected={selected.length}
           setFilter={setFilter}
+          data={data}
+          setData={setData}
+          tableCells={tableCells}
         />
         <TableContainer>
           <Table

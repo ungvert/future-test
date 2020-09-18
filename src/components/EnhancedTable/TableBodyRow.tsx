@@ -64,15 +64,17 @@ export default function TableBodyRow({
       >
         {row.id}
       </TableCell> */}
-      {tableCells.map((tableCell) => (
-        <TableCell
-          key={tableCell.label}
-          align={tableCell.numeric ? 'right' : 'left'}
-          padding={tableCell.disablePadding ? 'none' : 'default'}
-        >
-          {row[tableCell.id]}
-        </TableCell>
-      ))}
+      {tableCells
+        .filter((cell) => cell.displayInTable)
+        .map((tableCell) => (
+          <TableCell
+            key={tableCell.label}
+            align={tableCell.numeric ? 'right' : 'left'}
+            padding={tableCell.disablePadding ? 'none' : 'default'}
+          >
+            {row[tableCell.id]}
+          </TableCell>
+        ))}
 
       {/* <TableCell align="right">{row.id}</TableCell> */}
       {/* <TableCell align="right">{row.fat}</TableCell>

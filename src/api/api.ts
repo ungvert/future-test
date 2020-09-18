@@ -1,15 +1,8 @@
 import axios from 'axios';
 
-// const endpoints = {
-//   small: 'https://future-test.ungvert.vercel.app/api/filltext?variant=small',
-//   big: 'https://future-test.ungvert.vercel.app/api/filltext?variant=big',
-// };
-
 const endpoints = {
-  small:
-    'http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}',
-  big:
-    'http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}',
+  small: 'https://future-test.ungvert.vercel.app/api/filltext?variant=small',
+  big: 'https://future-test.ungvert.vercel.app/api/filltext?variant=big',
 };
 
 const fetchData = async (variant: ApiDataVariant) => {
@@ -20,7 +13,7 @@ const fetchData = async (variant: ApiDataVariant) => {
       if (response.data.hasOwnProperty('error')) {
         return [JSON.stringify(response.data.error), null];
       } else {
-        return [null, response.data];
+        return [null, prepareData(response.data)];
       }
     }
     return ['API not returned data', null];
@@ -31,3 +24,20 @@ const fetchData = async (variant: ApiDataVariant) => {
 };
 
 export default fetchData;
+
+function prepareData(data: RawData[]): Data[] {
+  return data.map((obj) => {
+    return {
+      id: obj.id,
+      firstName: obj.firstName,
+      lastName: obj.lastName,
+      email: obj.email,
+      phone: obj.phone,
+      addressStreetAddress: obj.address.streetAddress,
+      addressCity: obj.address.city,
+      addressState: obj.address.state,
+      addressZip: obj.address.zip,
+      description: obj.description,
+    };
+  });
+}
