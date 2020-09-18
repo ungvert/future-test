@@ -24,18 +24,12 @@ type SortableRows =
   | 'phone'
   | 'description';
 
-// interface Data {
-//     calories: number;
-//     carbs: number;
-//     fat: number;
-//     name: string;
-//     protein: number;
-//   }
-
-interface HeadCell {
-  disablePadding: boolean;
+interface TableCell {
   id: keyof Data;
   label: string;
+  disablePadding: boolean;
   numeric: boolean;
   sortable: boolean;
 }
+
+type ApiDataVariant = 'small' | 'big';

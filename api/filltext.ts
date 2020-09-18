@@ -24,13 +24,13 @@ export default async (req: NowRequest, res: NowResponse) => {
   if (!((variant as string) in endpoints)) {
     res
       .status(400)
-      .send(
-        new Error(
+      .send({
+        error: new Error(
           `Variant ${variant} not found. Correct variants: ${Object.keys(
             endpoints
           )}`
-        )
-      );
+        ),
+      });
     return;
   }
 

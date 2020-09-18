@@ -7,11 +7,14 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  TextField,
+  InputAdornment,
 } from '@material-ui/core';
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
+import debounce from 'lodash/debounce';
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,11 +40,16 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  setFilter: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+export const EnhancedTableToolbar = ({
+  numSelected,
+  setFilter,
+}: EnhancedTableToolbarProps) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+
+  const debouncedSetFilter = debounce((text: string) => setFilter(text), 200);
 
   return (
     <Toolbar
@@ -68,19 +76,20 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           Dataset
         </Typography>
       )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+
+      <TextField
+        label="Filter"
+        variant="outlined"
+        size="small"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <FilterListIcon />
+            </InputAdornment>
+          ),
+        }}
+        onChange={(event) => debouncedSetFilter(event.target.value)}
+      />
     </Toolbar>
   );
 };

@@ -3,8 +3,9 @@ import React from 'react';
 
 type Props = {
   row: Data;
+  tableCells: TableCell[];
 };
-export default function TableBodyRow({ row }: Props) {
+export default function TableBodyRow({ row, tableCells }: Props) {
   // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
   //   const selectedIndex = selected.indexOf(name);
   //   let newSelected: string[] = [];
@@ -40,14 +41,25 @@ export default function TableBodyRow({ row }: Props) {
           inputProps={{ 'aria-labelledby': labelId }}
         />
       </TableCell> */}
-      <TableCell
+
+      {/* <TableCell
         component="th"
         // id={labelId}
         scope="row"
         // padding="none"
       >
         {row.id}
-      </TableCell>
+      </TableCell> */}
+      {tableCells.map((tableCell) => (
+        <TableCell
+          key={tableCell.id}
+          align={tableCell.numeric ? 'right' : 'left'}
+          padding={tableCell.disablePadding ? 'none' : 'default'}
+        >
+          {row[tableCell.id]}
+        </TableCell>
+      ))}
+
       {/* <TableCell align="right">{row.id}</TableCell> */}
       {/* <TableCell align="right">{row.fat}</TableCell>
       <TableCell align="right">{row.carbs}</TableCell>

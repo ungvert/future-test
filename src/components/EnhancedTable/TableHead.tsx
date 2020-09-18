@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface EnhancedTableProps {
-  headCells: HeadCell[];
+  tableCells: TableCell[];
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
   onRequestSort: (
@@ -52,7 +52,7 @@ interface EnhancedTableProps {
 
 export function EnhancedTableHead(props: EnhancedTableProps) {
   const {
-    headCells,
+    tableCells,
     classes,
     // onSelectAllClick,
     order,
@@ -78,22 +78,21 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
             inputProps={{ 'aria-label': 'select all desserts' }}
           /> */}
         {/* </TableCell> */}
-        {headCells.map((headCell) => (
+        {tableCells.map((tableCell) => (
           <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
+            key={tableCell.id}
+            align={tableCell.numeric ? 'right' : 'left'}
+            padding={tableCell.disablePadding ? 'none' : 'default'}
+            sortDirection={orderBy === tableCell.id ? order : false}
           >
-            {headCell.label}
-
-            {headCell.sortable && (
+            {tableCell.sortable ? (
               <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id as SortableRows)}
+                active={orderBy === tableCell.id}
+                direction={orderBy === tableCell.id ? order : 'asc'}
+                onClick={createSortHandler(tableCell.id as SortableRows)}
               >
-                {orderBy === headCell.id ? (
+                {tableCell.label}
+                {orderBy === tableCell.id ? (
                   <span className={classes.visuallyHidden}>
                     {order === 'desc'
                       ? 'sorted descending'
@@ -101,6 +100,8 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
                   </span>
                 ) : null}
               </TableSortLabel>
+            ) : (
+              tableCell.label
             )}
           </TableCell>
         ))}
