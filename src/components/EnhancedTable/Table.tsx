@@ -12,6 +12,7 @@ import { stableSort, getComparator } from '../../utils/tableSort';
 import { EnhancedTableToolbar } from './TableToolbar';
 import { EnhancedTableHead } from './TableHead';
 import TableBodyRow from './TableBodyRow';
+import { RowDetails } from './RowDetails';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,6 +55,7 @@ export default function EnhancedTable({ data, setData }: TableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [filter, setFilter] = useState<string | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Data | null>(null);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -159,7 +161,15 @@ export default function EnhancedTable({ data, setData }: TableProps) {
                 .map((row, index) => {
                   // const isItemSelected = isSelected(row.name);
                   // const labelId = `enhanced-table-checkbox-${index}`;
-                  return <TableBodyRow row={row} tableCells={tableCells} />;
+                  return (
+                    <TableBodyRow
+                      key={index}
+                      row={row}
+                      tableCells={tableCells}
+                      selectedRow={selectedRow}
+                      setSelectedRow={setSelectedRow}
+                    />
+                  );
                 })}
             </TableBody>
           </Table>
@@ -174,6 +184,9 @@ export default function EnhancedTable({ data, setData }: TableProps) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
+      {/* {selectedRow && <div>{JSON.stringify(selectedRow)}</div>} */}
+      {selectedRow && <RowDetails row={selectedRow} tableCells={tableCells} />}
     </div>
   );
 }

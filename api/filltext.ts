@@ -22,15 +22,13 @@ export default async (req: NowRequest, res: NowResponse) => {
   const { variant } = req.query;
 
   if (!((variant as string) in endpoints)) {
-    res
-      .status(400)
-      .send({
-        error: new Error(
-          `Variant ${variant} not found. Correct variants: ${Object.keys(
-            endpoints
-          )}`
-        ),
-      });
+    res.status(400).send({
+      error: new Error(
+        `Variant ${variant} not found. Correct variants: ${Object.keys(
+          endpoints
+        )}`
+      ),
+    });
     return;
   }
 
@@ -40,7 +38,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     res.status(500).send(error);
   } else {
     if (axiosResponse.hasOwnProperty('data')) {
-      res.json({ ...axiosResponse.data });
+      res.json([...axiosResponse.data]);
     } else {
       res.status(500).send(new Error('API responded without data'));
     }

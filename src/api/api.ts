@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // const endpoints = {
-//   small: 'https://future-test-omega.vercel.app/api/filltext?variant=small',
-//   big: 'https://future-test-omega.vercel.app/api/filltext?variant=big',
+//   small: 'https://future-test.ungvert.vercel.app/api/filltext?variant=small',
+//   big: 'https://future-test.ungvert.vercel.app/api/filltext?variant=big',
 // };
 
 const endpoints = {

@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import fetchData from '../api/api';
 import EnhancedTable from './EnhancedTable/Table';
@@ -29,7 +30,7 @@ function Main() {
   }, []);
 
   return (
-    <main>
+    <Container component="main">
       {!dataVariant && (
         <React.Fragment>
           <button onClick={() => handleDatasetClick('small')}>
@@ -46,7 +47,7 @@ function Main() {
           setData={setData as React.Dispatch<React.SetStateAction<Data[]>>}
         />
       )}
-    </main>
+    </Container>
   );
 }
 

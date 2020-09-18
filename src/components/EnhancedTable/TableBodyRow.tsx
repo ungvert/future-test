@@ -1,11 +1,19 @@
 import { TableRow, TableCell, Checkbox } from '@material-ui/core';
+import { Rowing } from '@material-ui/icons';
 import React from 'react';
 
 type Props = {
   row: Data;
   tableCells: TableCell[];
+  selectedRow: Data | null;
+  setSelectedRow: React.Dispatch<React.SetStateAction<Data | null>>;
 };
-export default function TableBodyRow({ row, tableCells }: Props) {
+export default function TableBodyRow({
+  row,
+  tableCells,
+  selectedRow,
+  setSelectedRow,
+}: Props) {
   // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
   //   const selectedIndex = selected.indexOf(name);
   //   let newSelected: string[] = [];
@@ -25,15 +33,21 @@ export default function TableBodyRow({ row, tableCells }: Props) {
 
   //   setSelected(newSelected);
   // };
+
+  function handleClick(
+    event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+    row: Data
+  ) {
+    setSelectedRow(row === selectedRow ? null : row);
+  }
   return (
     <TableRow
       hover
-      // onClick={(event) => handleClick(event, row.name)}
+      onClick={(event) => handleClick(event, row)}
       role="checkbox"
       // aria-checked={isItemSelected}
       tabIndex={-1}
-      key={row.id}
-      // selected={isItemSelected}
+      selected={row === selectedRow}
     >
       {/* <TableCell >
         <Checkbox
@@ -52,7 +66,7 @@ export default function TableBodyRow({ row, tableCells }: Props) {
       </TableCell> */}
       {tableCells.map((tableCell) => (
         <TableCell
-          key={tableCell.id}
+          key={tableCell.label}
           align={tableCell.numeric ? 'right' : 'left'}
           padding={tableCell.disablePadding ? 'none' : 'default'}
         >
