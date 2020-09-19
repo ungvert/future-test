@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-
 import { Box, Typography } from '@material-ui/core';
-import React from 'react';
+
 type Props = {
   row: Data;
   tableCells: TableCell[];
 };
+
 export const RowDetails = ({ row, tableCells }: Props) => {
   const styles = {
     detailsHeadline: css`
@@ -37,13 +37,6 @@ export const RowDetails = ({ row, tableCells }: Props) => {
           />
         );
       })}
-
-      {/* <DetailsItem label={'Street address'} value={row.address.streetAddress} />
-      <DetailsItem label={'City'} value={row.address.city} />
-      <DetailsItem label={'State'} value={row.address.state} />
-      <DetailsItem label={'Zip'} value={row.address.zip} />
-
-      <DetailsItem label={'description'} value={row.description} /> */}
     </Box>
   );
 };

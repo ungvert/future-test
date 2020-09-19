@@ -2,11 +2,11 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Checkbox,
   TableSortLabel,
   createStyles,
   makeStyles,
   Theme,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 
@@ -39,15 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
 interface EnhancedTableProps {
   tableCells: TableCell[];
   classes: ReturnType<typeof useStyles>;
-  numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
     property: SortableRows
   ) => void;
-  // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
-  rowCount: number;
 }
 
 export function EnhancedTableHead(props: EnhancedTableProps) {
@@ -57,8 +54,6 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
     // onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
     onRequestSort,
   } = props;
   const createSortHandler = (property: SortableRows) => (
@@ -93,7 +88,7 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
                   direction={orderBy === tableCell.id ? order : 'asc'}
                   onClick={createSortHandler(tableCell.id as SortableRows)}
                 >
-                  {tableCell.label}
+                  <Typography variant="subtitle1">{tableCell.label}</Typography>
                   {orderBy === tableCell.id ? (
                     <span className={classes.visuallyHidden}>
                       {order === 'desc'

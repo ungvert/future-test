@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import { stableSort, getComparator } from '../../utils/tableSort';
 import { EnhancedTableToolbar } from './TableToolbar';
 import { EnhancedTableHead } from './TableHead';
 import TableBodyRow from './TableBodyRow';
 import { RowDetails } from './RowDetails';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,9 +47,7 @@ export default function EnhancedTable({ data, setData }: TableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<SortableRows>('id');
-  const [selected, setSelected] = useState<string[]>([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [filter, setFilter] = useState<string | null>(null);
@@ -183,10 +180,9 @@ export default function EnhancedTable({ data, setData }: TableProps) {
   }
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root} my={3}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
-          numSelected={selected.length}
           setFilter={setFilter}
           data={data}
           setData={setData}
@@ -196,17 +192,14 @@ export default function EnhancedTable({ data, setData }: TableProps) {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
             aria-label="enhanced table"
           >
             <EnhancedTableHead
               tableCells={tableCells}
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={data.length}
             />
             <TableBody>
               {stableSort(data, getComparator(order, orderBy))
@@ -238,6 +231,6 @@ export default function EnhancedTable({ data, setData }: TableProps) {
       </Paper>
 
       {selectedRow && <RowDetails row={selectedRow} tableCells={tableCells} />}
-    </div>
+    </Box>
   );
 }

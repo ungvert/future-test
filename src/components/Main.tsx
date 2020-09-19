@@ -4,8 +4,9 @@ import {
   ButtonGroup,
   CircularProgress,
   Container,
+  Typography,
 } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import fetchData from '../api/api';
 import EnhancedTable from './EnhancedTable/Table';
 
@@ -60,7 +61,11 @@ function Main() {
         </Box>
       )}
 
-      {error && <div>error:{error}</div>}
+      {error && (
+        <Box display="flex" my={4}>
+          <Typography color="error">{error}</Typography>
+        </Box>
+      )}
       {data && (
         <EnhancedTable data={data as Data[]} setData={setData as SetData} />
       )}

@@ -26,23 +26,13 @@ export default function AddRowDialog({
   open,
   setOpen,
   data,
-  //   dataItem,
   setData,
   tableCells,
-}: //   setActiveItem,
-Props) {
+}: Props) {
   const [newRowData, setNewRowData] = useState<Partial<Data> | null>(null);
-  //   const isNewItem = !dataItem.id;
-
-  //   const [name, setName] = useState(dataItem.name);
-  //   const [type, setType] = useState(dataItem.type);
-  //   const [color, setColor] = useState<string>(dataItem.color);
-
-  //   const id = isNewItem ? uuidv4() : dataItem.id;
+  const theme = useTheme();
 
   const handleSubmit = () => {
-    console.log('newRowData', newRowData);
-
     if (newRowData) {
       setData([newRowData as Data, ...data]);
     }
@@ -52,7 +42,6 @@ Props) {
   };
 
   const handleClose = () => {
-    //   setActiveItem(null);
     setOpen(false);
   };
 
@@ -71,6 +60,7 @@ Props) {
       });
     }
   };
+
   function everyInputIsFilled() {
     return newRowData
       ? tableCells.every(({ id }) => {
@@ -82,11 +72,8 @@ Props) {
       : false;
   }
 
-  const theme = useTheme();
-
   const styles = {
     title: css`
-      /* flex: 1 0.5 0; */
       margin-right: ${theme.spacing(4)}px;
     `,
     toolbarButton: css`
@@ -95,6 +82,7 @@ Props) {
       flex-shrink: 0;
     `,
   };
+
   return (
     <Box>
       <Button
@@ -103,7 +91,7 @@ Props) {
         startIcon={<AddCircleOutlineIcon />}
         onClick={() => setOpen(!open)}
       >
-        Add
+        Add row
       </Button>
       {open && (
         <Dialog
@@ -111,10 +99,7 @@ Props) {
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <DialogTitle id="customized-dialog-title">
-            {/* {isNewItem ? 'Добавить' : 'Редактировать'} */}
-            Add row
-          </DialogTitle>
+          <DialogTitle id="customized-dialog-title">Add row</DialogTitle>
           <DialogContent dividers>
             <Box>
               {tableCells.map((tableCell, i) => (
@@ -140,7 +125,7 @@ Props) {
               color="primary"
               disabled={!everyInputIsFilled()}
             >
-              Add
+              Add row
             </Button>
           </DialogActions>
         </Dialog>
