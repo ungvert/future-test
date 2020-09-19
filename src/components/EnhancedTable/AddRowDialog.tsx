@@ -18,9 +18,7 @@ type Props = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   data: Data[];
-  //   dataItem: DataItem;
   setData: SetData;
-  //   setActiveItem: React.Dispatch<React.SetStateAction<DataItem | null>>;
   tableCells: TableCell[];
 };
 
@@ -58,17 +56,6 @@ Props) {
     setOpen(false);
   };
 
-  //   const handleDelete = () => {
-  //     setData(data.filter((item) => item.id !== id));
-
-  //     setActiveItem(null);
-  //     setOpen(false);
-  //   };
-
-  //   const handleNameChange = (
-  //     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  //   ) => setName(e.target.value);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     ids: keyof Data
@@ -84,6 +71,16 @@ Props) {
       });
     }
   };
+  function everyInputIsFilled() {
+    return newRowData
+      ? tableCells.every(({ id }) => {
+          if (id in newRowData && newRowData[id] !== null) {
+            return true;
+          }
+          return false;
+        })
+      : false;
+  }
 
   const theme = useTheme();
 
@@ -130,37 +127,19 @@ Props) {
                   margin="dense"
                   fullWidth
                   onChange={(e) => handleChange(e, tableCell.id)}
-
-                  //   value={name}
-                  // onChange={handleNameChange}
                 />
               ))}
-              {/* <TextField
-            label="Name"
-            variant="outlined"
-            size="small"
-            margin="dense"
-            type="text"
-            value={name}
-            onChange={handleNameChange}
-          />
-
-          <TextField
-            label="Type"
-            variant="outlined"
-            size="small"
-            margin="dense"
-            type="text"
-            value={type}
-            onChange={handleTypeChange}
-          /> */}
             </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="inherit">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button
+              onClick={handleSubmit}
+              color="primary"
+              disabled={!everyInputIsFilled()}
+            >
               Add
             </Button>
           </DialogActions>

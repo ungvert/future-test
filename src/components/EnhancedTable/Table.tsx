@@ -5,7 +5,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import { stableSort, getComparator } from '../../utils/tableSort';
@@ -66,15 +65,6 @@ export default function EnhancedTable({ data, setData }: TableProps) {
     setOrderBy(property);
   };
 
-  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = rows.map((n) => n.id);
-  //     setSelected(newSelecteds);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -85,8 +75,6 @@ export default function EnhancedTable({ data, setData }: TableProps) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   const tableCells: TableCell[] = [
     {
@@ -183,6 +171,17 @@ export default function EnhancedTable({ data, setData }: TableProps) {
     },
   ];
 
+  function applyFilterToRow(item: Data) {
+    if (!filter) {
+      return true;
+    }
+
+    const cellsToFilter = tableCells.filter((cell) => cell.displayInTable);
+    return cellsToFilter.some(({ id }) => {
+      return String(item[id]).toLowerCase().includes(filter);
+    });
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -206,21 +205,14 @@ export default function EnhancedTable({ data, setData }: TableProps) {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={data.length}
             />
             <TableBody>
               {stableSort(data, getComparator(order, orderBy))
-                .filter((item) =>
-                  filter
-                    ? item.firstName.toLowerCase().includes(filter as string)
-                    : true
-                )
+                .filter(applyFilterToRow)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  // const isItemSelected = isSelected(row.name);
-                  // const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableBodyRow
                       key={index}
@@ -245,7 +237,6 @@ export default function EnhancedTable({ data, setData }: TableProps) {
         />
       </Paper>
 
-      {/* {selectedRow && <div>{JSON.stringify(selectedRow)}</div>} */}
       {selectedRow && <RowDetails row={selectedRow} tableCells={tableCells} />}
     </div>
   );

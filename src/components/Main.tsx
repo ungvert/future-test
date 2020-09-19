@@ -1,4 +1,10 @@
-import { Container } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  Container,
+} from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import fetchData from '../api/api';
 import EnhancedTable from './EnhancedTable/Table';
@@ -25,27 +31,38 @@ function Main() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    handleDatasetClick('small');
-  }, []);
-
   return (
     <Container component="main">
-      {!dataVariant && (
-        <React.Fragment>
-          <button onClick={() => handleDatasetClick('small')}>
-            Small dataset
-          </button>
-          <button onClick={() => handleDatasetClick('big')}>Big dataset</button>
-        </React.Fragment>
+      {
+        <Box my={4}>
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button
+              onClick={() => handleDatasetClick('small')}
+              variant={dataVariant === 'small' ? 'contained' : 'outlined'}
+            >
+              Fetch small dataset
+            </Button>
+            <Button
+              onClick={() => handleDatasetClick('big')}
+              variant={dataVariant === 'big' ? 'contained' : 'outlined'}
+            >
+              Fetch big dataset
+            </Button>
+          </ButtonGroup>
+        </Box>
+      }
+      {loading && (
+        <Box display="flex" my={4}>
+          <CircularProgress />
+        </Box>
       )}
-      {loading && <div>loading</div>}
+
       {error && <div>error:{error}</div>}
       {data && (
-        <EnhancedTable
-          data={data as Data[]}
-          setData={setData as React.Dispatch<React.SetStateAction<Data[]>>}
-        />
+        <EnhancedTable data={data as Data[]} setData={setData as SetData} />
       )}
     </Container>
   );
