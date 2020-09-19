@@ -7,16 +7,8 @@ const endpoints = {
   big:
     'http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}',
 };
-type Variant = 'small' | 'big';
 
-const fetchData = async (variant: Variant) => {
-  try {
-    const response = await axios.get(endpoints[variant]);
-    return [null, response];
-  } catch (e) {
-    return [e, null];
-  }
-};
+type Variant = 'small' | 'big';
 
 export default async (req: NowRequest, res: NowResponse) => {
   const { variant } = req.query;
@@ -42,5 +34,14 @@ export default async (req: NowRequest, res: NowResponse) => {
     } else {
       res.status(500).send(new Error('API responded without data'));
     }
+  }
+};
+
+const fetchData = async (variant: Variant) => {
+  try {
+    const response = await axios.get(endpoints[variant]);
+    return [null, response];
+  } catch (e) {
+    return [e, null];
   }
 };

@@ -13,7 +13,7 @@ const fetchData = async (variant: ApiDataVariant) => {
       if (response.data.hasOwnProperty('error')) {
         return [JSON.stringify(response.data.error), null];
       } else {
-        return [null, prepareData(response.data)];
+        return [null, normalizeData(response.data)];
       }
     }
     return ['API not returned data', null];
@@ -25,7 +25,7 @@ const fetchData = async (variant: ApiDataVariant) => {
 
 export default fetchData;
 
-function prepareData(data: RawData[]): Data[] {
+function normalizeData(data: RawData[]): Data[] {
   return data.map((obj) => {
     return {
       id: obj.id,

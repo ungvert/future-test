@@ -34,27 +34,22 @@ function Main() {
 
   return (
     <Container component="main">
-      {
-        <Box my={4}>
-          <ButtonGroup
-            color="primary"
-            aria-label="outlined primary button group"
+      <Box my={4}>
+        <ButtonGroup color="primary" aria-label="outlined primary button group">
+          <Button
+            onClick={() => handleDatasetClick('small')}
+            variant={dataVariant === 'small' ? 'contained' : 'outlined'}
           >
-            <Button
-              onClick={() => handleDatasetClick('small')}
-              variant={dataVariant === 'small' ? 'contained' : 'outlined'}
-            >
-              Fetch small dataset
-            </Button>
-            <Button
-              onClick={() => handleDatasetClick('big')}
-              variant={dataVariant === 'big' ? 'contained' : 'outlined'}
-            >
-              Fetch big dataset
-            </Button>
-          </ButtonGroup>
-        </Box>
-      }
+            Fetch small dataset
+          </Button>
+          <Button
+            onClick={() => handleDatasetClick('big')}
+            variant={dataVariant === 'big' ? 'contained' : 'outlined'}
+          >
+            Fetch big dataset
+          </Button>
+        </ButtonGroup>
+      </Box>
       {loading && (
         <Box display="flex" my={4}>
           <CircularProgress />
